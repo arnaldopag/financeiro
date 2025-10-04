@@ -1,0 +1,34 @@
+spring:
+  cloud:
+    stream:
+      binders:
+        kafka-binder:
+          type: kafka
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    binder:
+                      brokers: localhost:9092
+        rabbitmq-binder:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: user
+                password: password
+      bindings:
+        rendimentoInput-in-0:
+          destination: financeiro.rendimentos
+          binder: kafka-binder
+          group: transacoes-rendimento-consumer-group
+
+        alerta-vencido-out-0:
+          destination: financeiro.alertas
+          binder: rabbitmq-binder
+
+  application:
+    name: ms-transacoes

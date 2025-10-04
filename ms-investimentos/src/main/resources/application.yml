@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: ms-investimentos
+  cloud:
+    stream:
+      bindings:
+        rendimentos-out-0:
+          destination: financeiro.rendimentos
+          binder: kafka-binder
