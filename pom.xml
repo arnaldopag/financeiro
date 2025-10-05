@@ -24,6 +24,10 @@
     <modules>
         <module>ms-transacoes</module>
         <module>ms-investimentos</module>
+        <module>ms-gateway</module>
+        <module>ms-eureka</module>
+        <module>ms-contas</module>
+        <module>ms-common</module>
     </modules>
     <scm>
 		<connection/>
@@ -97,6 +101,14 @@
 			<artifactId>spring-cloud-stream-test-binder</artifactId>
 			<scope>test</scope>
 		</dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+        </dependency>
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

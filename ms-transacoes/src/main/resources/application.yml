@@ -1,4 +1,15 @@
 spring:
+  application:
+    name: ms-transacoes
+  datasource:
+    url: jdbc:postgresql://postgres-transacoes:5432/transacoes
+    username: postgres
+    password: batman
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
   cloud:
     stream:
       binders:
@@ -10,16 +21,18 @@ spring:
                 stream:
                   kafka:
                     binder:
-                      brokers: localhost:9092
+                      brokers: kafka-transacoes:9092
+
         rabbitmq-binder:
           type: rabbit
           environment:
             spring:
               rabbitmq:
-                host: localhost
+                host: rabbitmq-transacoes
                 port: 5672
                 username: user
                 password: password
+
       bindings:
         rendimentoInput-in-0:
           destination: financeiro.rendimentos
@@ -29,6 +42,3 @@ spring:
         alerta-vencido-out-0:
           destination: financeiro.alertas
           binder: rabbitmq-binder
-
-  application:
-    name: ms-transacoes

@@ -9,22 +9,12 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.controle.transacoes</groupId>
-    <artifactId>ms-transacoes</artifactId>
+    <artifactId>ms-common</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.controle</groupId>
-            <artifactId>ms-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
 
 </project>

@@ -1,0 +1,68 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-transacoes
+    environment:
+      POSTGRES_DB: transacoes
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: batman
+    ports:
+      - "5432:5432"
+    networks:
+      - ms-transacoes-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq-transacoes
+    environment:
+      RABBITMQ_DEFAULT_USER: user
+      RABBITMQ_DEFAULT_PASS: password
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - ms-transacoes-network
+
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    container_name: zookeeper-transacoes
+    environment:
+      - ALLOW_ANONYMOUS_LOGIN=yes
+    ports:
+      - "2181:2181"
+    networks:
+      - ms-transacoes-network
+
+  kafka:
+    image: bitnami/kafka:latest
+    container_name: kafka-transacoes
+    environment:
+      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-transacoes:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-transacoes:9092
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    networks:
+      - ms-transacoes-network
+
+  ms-transacoes-app:
+    build: .
+    container_name: ms-transacoes-app
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - rabbitmq
+      - kafka
+    networks:
+      - ms-transacoes-network
+
+networks:
+  ms-transacoes-network:
+    driver: bridge
